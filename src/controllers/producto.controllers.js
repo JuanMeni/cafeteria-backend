@@ -41,8 +41,19 @@ export const listarProductos = async(req, res)=>{
     }
 }
 
-export const obtenerProducto = (req, res)=>{
-    res.send('Aqui envio un obj producto')
+export const obtenerProducto = async(req, res)=>{
+    try {
+        console.log(req.params.id);
+        // buscar en la base de datos la collection de productos
+        const productoBuscado = await Producto.findById(req.params.id);
+        // enviar la respuesta
+        res.status(200).json(productoBuscado);
+    } catch (error) {
+        console.log(error)
+        res.status(404).json({
+            mensaje: 'Error al buscar los productos'
+        })
+    }
 }
 export const borrarProducto = (req, res)=>{
     res.send('Aqui se borra un producto')
