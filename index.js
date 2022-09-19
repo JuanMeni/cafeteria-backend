@@ -1,5 +1,9 @@
 // const express = require('express');
 import express from 'express';
+import morgan from 'morgan';
+import cors from 'cors';
+import './src/database';
+import router from './src/routes/productos.routes';
 
 // instancia de express
 const app = express();
@@ -14,13 +18,13 @@ app.listen(app.get('port'), ()=>{
 })
 
 // middlewares
+app.use(morgan('dev')); //da informacion en la terminal
+app.use(cors()); //permite recibir peticiones remotas de otras pc
+// los dos middlewares sgtes. sirven para procesar un obj json
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+//cargar un archivo estatico
+app.use(express.static('./public'));
 
-// rutas para peticiones
-app.get('/',(req, res)=>{
-    res.send('primera peticion get')
-})
-app.get('/prueba',(req, res)=>{
-    res.send('otra peticion get')
-})
-
-// app.post('/')
+// rutas
+app.use('/apicafe', router );
