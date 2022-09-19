@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import './src/database';
 import router from './src/routes/productos.routes';
+import path from 'path';
 
 // instancia de express
 const app = express();
@@ -24,7 +25,9 @@ app.use(cors()); //permite recibir peticiones remotas de otras pc
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 //cargar un archivo estatico
-app.use(express.static('./public'));
+// app.use(express.static('./public'));
+app.use(express.static(path.join(__dirname,'public')));
+
 
 // rutas
 app.use('/apicafe', router );
